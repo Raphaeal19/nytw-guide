@@ -1,0 +1,15 @@
+[Unit]
+Description=Event Intel FastAPI Server
+After=network.target postgresql.service
+
+[Service]
+Type=simple
+User=pi
+WorkingDirectory=/home/pi/nytw-guide
+ExecStart=/home/pi/nytw-guide/server/venv/bin/uvicorn server.api.main:app --host 127.0.0.1 --port 8000 --workers 2
+Restart=on-failure
+RestartSec=5
+Environment=PYTHONPATH=/home/pi/nytw-guide
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,16 @@
+__pycache__/
+*.pyc
+*.pyo
+venv/
+server/venv/
+.env
+*.env
+node_modules/
+app/.vite/
+app/dist/
+
+# Auth files — contain session tokens
+agent/*_auth.json
+agent/partiful_profile/
+agent/linkedin_auth.json
+agent/twitter_auth.json

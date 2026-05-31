@@ -1,0 +1,15 @@
+[Unit]
+Description=Event Intel Celery Worker
+After=network.target redis.service
+
+[Service]
+Type=simple
+User=pi
+WorkingDirectory=/home/pi/nytw-guide
+ExecStart=/home/pi/nytw-guide/server/venv/bin/celery -A server.tasks.celery_app worker --loglevel=info
+Restart=on-failure
+RestartSec=5
+Environment=PYTHONPATH=/home/pi/nytw-guide
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,41 @@
+[
+    {
+        "domain": ".partiful.com",
+        "expirationDate": 1811781034,
+        "hostOnly": false,
+        "httpOnly": false,
+        "name": "__stripe_mid",
+        "path": "/",
+        "sameSite": "strict",
+        "secure": true,
+        "session": false,
+        "storeId": null,
+        "value": "d720324d-3fe3-4d6c-8b96-956df4be35185014aa"
+    },
+    {
+        "domain": ".partiful.com",
+        "expirationDate": 1780246834,
+        "hostOnly": false,
+        "httpOnly": false,
+        "name": "__stripe_sid",
+        "path": "/",
+        "sameSite": "strict",
+        "secure": true,
+        "session": false,
+        "storeId": null,
+        "value": "f9fe1dfa-bf15-493d-84d2-42d4cab5f737fe2a7b"
+    },
+    {
+        "domain": "partiful.com",
+        "expirationDate": 1795797031.172687,
+        "hostOnly": true,
+        "httpOnly": true,
+        "name": "_partiful_session",
+        "path": "/",
+        "sameSite": "lax",
+        "secure": true,
+        "session": false,
+        "storeId": null,
+        "value": "eyJhbGciOiJSUzI1NiIsImtpZCI6IjNYZEltUSJ9.eyJpc3MiOiJodHRwczovL3Nlc3Npb24uZmlyZWJhc2UuZ29vZ2xlLmNvbS9nZXRwYXJ0aWZ1bCIsIm5hbWUiOiJBeXVzaCBQYXRoYWsiLCJhdWQiOiJnZXRwYXJ0aWZ1bCIsImF1dGhfdGltZSI6MTc4MDI0NDg5MiwidXNlcl9pZCI6IjdHb2pHOTE0Y3JTUkhEbDViTzlSc3FOSEVkMTIiLCJzdWIiOiI3R29qRzkxNGNyU1JIRGw1Yk85UnNxTkhFZDEyIiwiaWF0IjoxNzgwMjQ1MDMxLCJleHAiOjE3ODE0NTQ2MzEsInBob25lX251bWJlciI6IisxOTg0MzI3ODMyNCIsImZpcmViYXNlIjp7ImlkZW50aXRpZXMiOnsicGhvbmUiOlsiKzE5ODQzMjc4MzI0Il19LCJzaWduX2luX3Byb3ZpZGVyIjoiY3VzdG9tIn19.XSQqTc3CTU95BDoKKzBXBfCWjRBlYlOd0q2EcYz2qKJkovt8b7J1kIzbiKJchGZp4vpBduId1kJ2ePMCgOZvfpIlDUJa8q-ktBjL2daVLl32COMP7r3EPsBnXj6hxwKUSEMJGNLJtFRJN-SdrCpOI7W6finYWRnMLhLjhC_ffi2ANlB2qTzKQDNPtMXTRFz95mLEzHfSZzRbfqUZ_PhWYPmrojMVUF5LlgxG_S_T6cGKgIDUFbb3GCqJ6LJenohTvTJ7S4oGiQ8BtyR-vOXfofgSolDpPPmqqpkpZG9q-vHlGfHR4bYFBlrFa-bhtss1CV6FF4xwen1_EGAoSGzbaw"
+    }
+]
