@@ -1,5 +1,5 @@
 from sqlalchemy import (
-    Column, String, Boolean, Text, Date, DateTime,
+    Column, String, Boolean, Text, Date, DateTime, Float,
     ForeignKey, UniqueConstraint,
 )
 from sqlalchemy.dialects.postgresql import UUID, JSONB, ARRAY
@@ -54,6 +54,8 @@ class Person(Base):
     recon_sources    = Column(JSONB)
     raw_intel        = Column(JSONB)
     agent_ran_at     = Column(DateTime)
+    locality_score   = Column(Float, nullable=True)
+    face_embedding   = Column(JSONB, nullable=True)
 
     created_at       = Column(DateTime, default=datetime.utcnow)
 
@@ -78,6 +80,8 @@ class EventAttendance(Base):
     met_at     = Column(DateTime)
     met_notes  = Column(Text)
 
+    selfie_url = Column(String, nullable=True)
+
     outreach_sent    = Column(Boolean, default=False)
     outreach_channel = Column(String)
     outreach_draft   = Column(Text)
@@ -87,3 +91,14 @@ class EventAttendance(Base):
 
     person = relationship("Person", back_populates="attendances")
     event  = relationship("Event",  back_populates="attendances")
+
+
+class ServiceConnection(Base):
+    __tablename__ = "service_connections"
+
+    id               = Column(UUID(as_uuid=True), primary_key=True, default=uuid4)
+    service_name     = Column(String, nullable=False, unique=True)
+    status           = Column(String, nullable=False, default="disconnected")
+    last_connected_at = Column(DateTime)
+    meta             = Column(JSONB)
+    created_at       = Column(DateTime, default=datetime.utcnow)

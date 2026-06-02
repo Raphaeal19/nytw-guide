@@ -25,17 +25,17 @@ export function usePeople(eventId: string | undefined) {
   useEffect(() => { fetch(); }, [fetch]);
 
   const toggleMet = useCallback(
-    async (attendanceId: string, met: boolean, notes?: string) => {
+    async (attendanceId: string, met: boolean, notes?: string, selfieUrl?: string) => {
       // Optimistic update
       setData((prev) =>
         prev.map((p) =>
           p.attendance_id === attendanceId
-            ? { ...p, met, met_notes: notes ?? p.met_notes, met_at: met ? new Date().toISOString() : p.met_at }
+            ? { ...p, met, met_notes: notes ?? p.met_notes, met_at: met ? new Date().toISOString() : p.met_at, selfie_url: selfieUrl ?? p.selfie_url }
             : p
         )
       );
       try {
-        const updated = await attendanceApi.setMet(attendanceId, met, notes);
+        const updated = await attendanceApi.setMet(attendanceId, met, notes, selfieUrl);
         setData((prev) =>
           prev.map((p) =>
             p.attendance_id === attendanceId ? { ...p, ...updated } : p

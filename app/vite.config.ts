@@ -10,8 +10,8 @@ export default defineConfig({
       manifest: {
         name: "Event Intel",
         short_name: "EventIntel",
-        theme_color: "#1a1a2e",
-        background_color: "#1a1a2e",
+        theme_color: "#0A0A0A",
+        background_color: "#0A0A0A",
         display: "standalone",
         orientation: "portrait",
         icons: [
@@ -41,6 +41,10 @@ export default defineConfig({
   server: {
     proxy: {
       "/api": {
+        target: "http://localhost:8000",
+        changeOrigin: true,
+      },
+      "/uploads": {
         target: "http://localhost:8000",
         changeOrigin: true,
       },

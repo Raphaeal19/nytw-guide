@@ -42,6 +42,13 @@ export interface ReconSources {
   [key: string]: ReconSource | undefined;
 }
 
+export interface ServiceConnection {
+  service_name: string;
+  status: string;
+  last_connected_at: string | null;
+  meta: Record<string, unknown> | null;
+}
+
 export interface AttendancePerson {
   attendance_id: string;
   person_id: string;
@@ -61,6 +68,7 @@ export interface AttendancePerson {
   met: boolean;
   met_at: string | null;
   met_notes: string | null;
+  selfie_url: string | null;
   outreach_sent: boolean;
   outreach_channel: string | null;
   outreach_draft: string | null;

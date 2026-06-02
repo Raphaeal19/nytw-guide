@@ -1,6 +1,6 @@
 import ollama
 from server.config import settings
-from server.drafter.prompts import DRAFT_PROMPT
+from server.drafter.prompts import DRAFT_PROMPT, POLISH_NOTES_PROMPT
 
 
 def draft_message(attendance, channel: str, extra_context: str | None = None) -> str:
@@ -25,6 +25,19 @@ def draft_message(attendance, channel: str, extra_context: str | None = None) ->
         channel=channel,
     )
 
+    response = ollama.chat(
+        model=settings.ollama_model,
+        messages=[{"role": "user", "content": prompt}],
+        options={"base_url": settings.ollama_base_url},
+    )
+    return response["message"]["content"].strip()
+
+
+def polish_notes(raw_notes: str, person_name: str) -> str:
+    prompt = POLISH_NOTES_PROMPT.format(
+        raw_notes=raw_notes,
+        person_name=person_name,
+    )
     response = ollama.chat(
         model=settings.ollama_model,
         messages=[{"role": "user", "content": prompt}],

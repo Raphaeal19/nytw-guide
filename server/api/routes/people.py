@@ -44,6 +44,7 @@ def _attendance_with_person(att: EventAttendance) -> dict:
         "met": att.met,
         "met_at": att.met_at,
         "met_notes": att.met_notes,
+        "selfie_url": att.selfie_url,
         "outreach_sent": att.outreach_sent,
         "outreach_channel": att.outreach_channel,
         "outreach_draft": att.outreach_draft,

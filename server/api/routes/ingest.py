@@ -8,6 +8,7 @@ from sqlalchemy.dialects.postgresql import insert
 from pydantic import BaseModel
 from server.api.deps import get_db, verify_ingest_secret
 from server.db.models import Person, EventAttendance
+from server.lib.locality import compute_nyc_score
 
 router = APIRouter(prefix="/api/ingest", tags=["ingest"])
 
@@ -57,6 +58,7 @@ def ingest(
 ):
     upserted = 0
     for profile in body.people:
+        locality = compute_nyc_score(profile.location)
         person_data = {
             "name": profile.name,
             "company": profile.company,
@@ -74,12 +76,13 @@ def ingest(
             "recon_sources": profile.recon_sources,
             "raw_intel": profile.raw_intel,
             "agent_ran_at": datetime.utcnow(),
+            "locality_score": locality,
         }
 
-        # Look up by name first so company changes (NULL → real value) don't create duplicates
+        # Look up by name — prefer NYC-local profiles when names collide
         existing = db.query(Person).filter(
             func.lower(Person.name) == profile.name.lower()
-        ).first()
+        ).order_by(Person.locality_score.desc().nullslast()).first()
 
         if existing:
             for field, value in person_data.items():
@@ -118,4 +121,18 @@ def ingest(
         upserted += 1
 
     db.commit()
+
+    # Queue face embedding computation for people with photos but no embedding
+    try:
+        from server.tasks.embedding_task import compute_embedding_task
+        for profile in body.people:
+            if profile.photo_url:
+                person = db.query(Person).filter(
+                    func.lower(Person.name) == profile.name.lower()
+                ).first()
+                if person and not person.face_embedding:
+                    compute_embedding_task.delay(str(person.id))
+    except Exception:
+        pass
+
     return {"upserted": upserted}

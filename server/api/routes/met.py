@@ -14,6 +14,7 @@ router = APIRouter(prefix="/api/attendance", tags=["met"])
 class MetUpdate(BaseModel):
     met: bool
     notes: Optional[str] = None
+    selfie_url: Optional[str] = None
 
 
 @router.post("/{attendance_id}/met")
@@ -25,6 +26,8 @@ def toggle_met(attendance_id: UUID, body: MetUpdate, db: Session = Depends(get_d
     att.met = body.met
     if body.notes is not None:
         att.met_notes = body.notes
+    if body.selfie_url is not None:
+        att.selfie_url = body.selfie_url
     if body.met and not att.met_at:
         att.met_at = datetime.utcnow()
 
@@ -36,4 +39,5 @@ def toggle_met(attendance_id: UUID, body: MetUpdate, db: Session = Depends(get_d
         "met": att.met,
         "met_at": att.met_at,
         "met_notes": att.met_notes,
+        "selfie_url": att.selfie_url,
     }

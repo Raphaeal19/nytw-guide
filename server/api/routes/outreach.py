@@ -21,6 +21,11 @@ class SendRequest(BaseModel):
     message: str
 
 
+class PolishRequest(BaseModel):
+    raw_notes: str
+    person_name: str
+
+
 @router.post("/draft")
 def draft_outreach(body: DraftRequest, db: Session = Depends(get_db)):
     att = db.get(EventAttendance, body.attendance_id)
@@ -55,6 +60,13 @@ def send_outreach(body: SendRequest, db: Session = Depends(get_db)):
     )
 
     return {"task_id": task.id, "status": "queued"}
+
+
+@router.post("/polish-notes")
+def polish_notes_endpoint(body: PolishRequest):
+    from server.drafter.drafter import polish_notes
+    polished = polish_notes(body.raw_notes, body.person_name)
+    return {"polished": polished}
 
 
 @router.get("/status/{task_id}")

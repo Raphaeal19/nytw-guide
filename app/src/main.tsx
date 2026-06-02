@@ -9,6 +9,7 @@ import {
 } from "react-router-dom";
 import { EventDetail } from "./pages/EventDetail";
 import { PersonProfile } from "./pages/PersonProfile";
+import { Settings } from "./pages/Settings";
 import { OfflineBanner } from "./components/OfflineBanner";
 import { useEvents } from "./hooks/useEvents";
 import { flush } from "./lib/offlineQueue";
@@ -54,6 +55,7 @@ function App() {
           path="/events/:eventId/people/:personId"
           element={<PersonProfile />}
         />
+        <Route path="/settings" element={<Settings />} />
       </Routes>
     </BrowserRouter>
   );
