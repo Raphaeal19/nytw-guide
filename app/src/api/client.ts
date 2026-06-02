@@ -1,5 +1,5 @@
 import axios from "axios";
-import type { Event, AttendancePerson } from "../types";
+import type { Event, AttendancePerson, ServiceConnection } from "../types";
 
 const api = axios.create({ baseURL: "/api" });
 
@@ -20,9 +20,13 @@ export const people = {
 };
 
 export const attendance = {
-  setMet: (attendanceId: string, met: boolean, notes?: string) =>
+  setMet: (attendanceId: string, met: boolean, notes?: string, selfieUrl?: string) =>
     api
-      .post(`/attendance/${attendanceId}/met`, { met, notes })
+      .post(`/attendance/${attendanceId}/met`, {
+        met,
+        notes,
+        selfie_url: selfieUrl,
+      })
       .then((r) => r.data),
 };
 
@@ -47,4 +51,37 @@ export const outreach = {
     api
       .get<{ status: string; error?: string }>(`/outreach/status/${taskId}`)
       .then((r) => r.data),
+  polishNotes: (rawNotes: string, personName: string) =>
+    api
+      .post<{ polished: string }>("/outreach/polish-notes", {
+        raw_notes: rawNotes,
+        person_name: personName,
+      })
+      .then((r) => r.data),
+};
+
+export const settings = {
+  connections: () =>
+    api.get<ServiceConnection[]>("/settings/connections").then((r) => r.data),
+};
+
+export const identify = {
+  match: (eventId: string, image: Blob) => {
+    const fd = new FormData();
+    fd.append("image", image, "capture.jpg");
+    return api
+      .post<{ match: AttendancePerson | null; confidence: number }>(
+        `/events/${eventId}/identify`,
+        fd,
+      )
+      .then((r) => r.data);
+  },
+};
+
+export const upload = {
+  selfie: (image: Blob) => {
+    const fd = new FormData();
+    fd.append("image", image, "selfie.jpg");
+    return api.post<{ url: string }>("/upload/selfie", fd).then((r) => r.data);
+  },
 };

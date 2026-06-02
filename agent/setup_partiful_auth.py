@@ -63,6 +63,23 @@ async def main():
 
     print(f"\n✓ Profile saved to {PROFILE_DIR}/")
     print("  (IndexedDB, cookies, localStorage all preserved)")
+
+    try:
+        import httpx
+        from agent.config import settings as cfg
+        resp = httpx.post(
+            f"{cfg.pi_url}/api/settings/connections/partiful",
+            json={"status": "connected", "meta": {"profile_dir": str(PROFILE_DIR)}},
+            headers={"X-Ingest-Secret": cfg.pi_api_secret},
+            timeout=10,
+        )
+        if resp.status_code == 200:
+            print("✓ Pi notified — connection status updated")
+        else:
+            print(f"⚠ Could not update Pi ({resp.status_code}). Update manually if needed.")
+    except Exception as e:
+        print(f"⚠ Could not reach Pi: {e}")
+
     print("\nYou can now run:")
     print('  python3 agent/run.py scrape-partiful "https://partiful.com/e/..." --dry-run')
 

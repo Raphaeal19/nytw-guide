@@ -21,3 +21,15 @@ Rules:
 
 Return ONLY the message text. Nothing else.
 """
+
+POLISH_NOTES_PROMPT = """
+Convert these raw meeting notes into a warm, professional first-person note.
+Keep it authentic to what was discussed. 2-3 sentences max.
+Don't invent details that aren't in the notes.
+Tone: friendly but professional, like texting a new work friend.
+
+Their name: {person_name}
+Raw notes: {raw_notes}
+
+Return ONLY the polished note. Nothing else.
+"""
